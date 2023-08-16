@@ -1,7 +1,11 @@
 'use client'
+
 import { AuthContext } from '@/context/AuthProvider';
 import { useContext, useState } from 'react';
 import { FaUserCircle } from "react-icons/fa";
+
+import Image from 'next/image';
+import { FiChevronDown } from "react-icons/fi";
 
 const Header = () => {
 
@@ -9,29 +13,29 @@ const Header = () => {
     const [toggle, setToggle] = useState(false);
 
     const { user, logOut } = useContext(AuthContext);
-    
+
 
     const handleLogOut = () => {
-        
+
     }
 
     //const isRole = useRole();
     //console.log(isRole);
 
     const navItems = <>
-       <li>HOme</li>
-       <li>HOme</li>
+        <li>HOme</li>
+        <li>HOme</li>
     </>
 
     return (
-        <div className="navbar bg-base-100 md:px-10 font-['Segoe UI'] font-semibold">
-            <div className="navbar-start">
+        <div className="flex justify-between bg-base-100 md:px-10 font-['Segoe UI'] font-semibold">
+            <div className="flex items-center">
                 <div className="relative" onClick={() => setToggle(!toggle)}>
                     <label tabIndex={0} className="btn btn-ghost lg:hidden m-0">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                     </label>
                     {
-                        toggle && <div className="absolute left-0 top-10 lg:hidden z-20">
+                        toggle && <div className="absolute left-0 top-10 lg:hidden z-20 border">
                             <ul className="menu menu-compact mt-3 p-2 shadow bg-base-100 rounded-md w-52 text-[17px]">
                                 {navItems}
                             </ul>
@@ -39,16 +43,16 @@ const Header = () => {
                     }
                 </div>
                 <div className="flex items-center">
-                    <img src="/images/logo2.png" alt="asdf" />
-                    <a className="btn btn-ghost normal-case text-xl md:text-2xl">WorldSpeak</a>
+                    <Image src="/home.svg" width={50} height={25} alt="asdf" />
                 </div>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            {/* <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 text-[17px]">
                     {user && navItems}
+                    <Image className='' src="/home.svg" width={50} height={25} alt="asdf" />
                 </ul>
-            </div>
-            <div className="navbar-end">
+            </div> */}
+            <div className="flex items-center">
                 {
                     !user && <div className="hidden lg:flex">
                         <ul className="menu menu-horizontal px-1 text-[17px]">
@@ -56,17 +60,27 @@ const Header = () => {
                         </ul>
                     </div>
                 }
+                <button className="btn btn-ghost btn-circle">
+                    <Image src="/notification-icon.svg" alt="icon" width={20} height={20} />
+                </button>
                 {
-                    user && <div className="relative" onClick={() => setUserControl(!userControl)}>
-                        <label className="btn btn-ghost btn-circle avatar m-0">
-                            <div className="w-10 rounded-full">
-                                {user.photoURL ? <img src={user.photoURL} alt="" className='bg-slate-200' title={user.displayName} />
-                                    : <span className='first-line:' title={user.displayName}><FaUserCircle size={40}></FaUserCircle></span>}
+                    user && <div className="relative" >
+                        <label className="flex px-3 py-1 border rounded-md my-2 items-center ">
+                            <div className="rounded-md bg-[#fa9052]">
+                               <Image src="/profile.svg" width={35} height={25} alt="profile" />
                             </div>
+                            <div className="flex flex-col pl-3">
+                                <p className="text-[12px]">Welcome back,</p>
+                                <p>{user?.displayName}</p>
+                            </div>
+                            <div className="pl-10" onClick={() => setUserControl(!userControl)}>
+                                <FiChevronDown size={25}></FiChevronDown>
+                            </div>
+                            
                         </label>
                         {
-                            userControl && <div className="absolute right-0 top-10 z-10">
-                                <ul className="menu menu-compact mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                            userControl && <div className="absolute right-0 top-12 z-10">
+                                <ul className="menu menu-compact mt-3 p-2 shadow bg-base-100 rounded-md border w-52">
                                     <li><span>{user.email}</span></li>
                                     <li onClick={handleLogOut}><a>Sign Out</a></li>
                                 </ul>
@@ -121,3 +135,4 @@ const Header = () => {
 };
 
 export default Header;
+//onClick={() => setUserControl(!userControl)}
