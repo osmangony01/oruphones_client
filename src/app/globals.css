@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.input-control {
+    @apply w-full bg-slate-100 box-border py-1.5 px-3 rounded hover:border-blue-400 border-transparent border-2 outline-none focus:border-blue-400
+}
+  
+  
+.other-login-btn{
+    @apply w-full py-1 bg-white border border-blue-400 hover:bg-purple-800 text-base text-black hover:text-white rounded flex justify-center items-center gap-2
+}
